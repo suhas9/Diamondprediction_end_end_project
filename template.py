@@ -6,7 +6,7 @@ package_name = 'DiamondPricePrediction'
 
 list_of_files = [
 
-    'github/workflow/.gitkeep'
+    'github/workflow/.gitkeep',
     f"src/{package_name}/__init__.py",
     f"src/{package_name}/components/__init__.py",
     f"src/{package_name}/components/data_ingestion.py",
