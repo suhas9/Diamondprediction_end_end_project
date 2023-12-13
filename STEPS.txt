@@ -1,0 +1,22 @@
+STEPS:
+1.init_setup.sh 
+2.template.py
+3.readme.md
+4.requirements.txt
+5.github push wiht licence file
+6.notebook / EDA.py file
+7.logger.py file
+8.exception.py
+9.data_ingestion.py
+10.run pipelines/training_pipeline.py till:
+(from src.DiamondPricePrediction.components.data_ingestion import DataIngestion
+from src.DiamondPricePrediction.logger import logging
+from src.DiamondPricePrediction.exception import CustomException
+import os,sys
+import pandas as pd
+import numpy as np
+
+obj = DataIngestion()
+obj.Initiate_data_ingestion())
+
+11.data_tranformation.py
