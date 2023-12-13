@@ -20,3 +20,4 @@ obj = DataIngestion()
 obj.Initiate_data_ingestion())
 
 11.data_tranformation.py
+12.model_training.py
