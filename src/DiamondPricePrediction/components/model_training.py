@@ -14,7 +14,7 @@ from sklearn.linear_model import LinearRegression,Ridge,Lasso,ElasticNet
 
 @dataclass
 class ModelTrainingConfig:
-    trained_model_file_path = os,path.join('Artifacts','model.pkl')
+    trained_model_file_path = os.path.join('Artifacts','model.pkl')
 
 
 
@@ -22,15 +22,16 @@ class ModelTrainer:
     def __init__(self):
        self.model_trainer_config = ModelTrainingConfig()
 
-    def Initiate_model_trainer(self):
+    def Initiate_model_trainer(self,train_array,test_array):
         try:
             logging.info('Splitting Dependent and Independent variable from train and test data')
-            X_train, y_train,X_test,,y_test = (
+            X_train, y_train, X_test, y_test = (
                 train_array[:,:-1],
-                train_array = [:,:-1],
-                test_array = [:,:-1],
-                test_array = [:,:-1]
+                train_array[:,-1],
+                test_array[:,:-1],
+                test_array[:,-1]
             )
+
             models = {
                 'LinearRegression':LinearRegression(),
                 'Lasso':Lasso(),
@@ -38,7 +39,7 @@ class ModelTrainer:
                 'ElasticNet':ElasticNet()
             }
 
-            model_report:dict = evalute_model(X_train, y_train,X_test,,y_test,models)
+            model_report:dict = evalute_model(X_train, y_train,X_test,y_test,models)
             print(model_report)
             print('\n===============================================================\n')
             logging.info(f'model report:{model_report}')
@@ -57,6 +58,12 @@ class ModelTrainer:
             save_object(
                 file_path = self.model_trainer_config.trained_data_path,
                 obj = best_model
+            )
+
+            logging.info('preprocessor pickel file saved')
+            return (
+                train_array,
+                test_array
             )
 
 

@@ -1,4 +1,5 @@
-import os,sys
+import os
+import sys
 import pandas as pd
 import numpy as np
 
@@ -47,7 +48,7 @@ class DataTransformation:
             cat_pipeline = pipeline(
                 steps = [
                     ('imputer',SimpleImputer(strategy='most frequent')),
-                    ('Ordinalencoding'OrdinalEncoder(categories=[cut_categories,color_categories,clarity_categories])),
+                    ('Ordinalencoding',OrdinalEncoder(categories=[cut_categories,color_categories,clarity_categories])),
                     ('scaler',StandardScaler())
                 ]
             )
@@ -74,20 +75,30 @@ class DataTransformation:
 
             preprocessing_obj = self.get_data_transformation()
 
-            traget_colume_name = 'price'
-            drop_column = [traget_colume_name,'id']
+            traget_column_name = 'price'
+            drop_column = [traget_column_name,'id']
 
             input_feature_train_df = train_df.drop(column=drop_column,axis = 1)
-            target_feature_train_df  = train_df[traget_colume_name]
+            target_feature_train_df  = train_df[traget_column_name]
+            input_feature_test_df=test_df.drop(columns=drop_column,axis=1)
+            target_feature_test_df=test_df[traget_column_name]
 
             input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
             input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
             logging.info('Applying preprocessing object on training and testing datasets')
 
+            train_arr = np.c_[input_feature_train_arr,np.array(target_feature_train_df)]
+            test_arr = np.c_[input_feature_test_arr,np.array(target_feature_test_df)]
+
             save_object(
                 file_path = self.data_transformation_config.preporcessor_obj_file_path,
                 obj = preprocessing_obj
                 )
+            
+            return (
+                train_arr,
+                test_arr
+            )
 
 
 
